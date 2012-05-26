@@ -20,6 +20,11 @@ function jdqt_get_random_quote() {
   global $post;
   $quote = '<div class="jdqt-quote">';
   $query = "orderby=rand&posts_per_page=1&post_type=" . JDQT_CPT_TYPE;
+  // Support for JDesrosiers Multilingual plugin:
+  if (function_exists('jdml_get_current_language_slug')) {
+    $query .= '&language='.jdml_get_current_language_slug();
+  }
+  // END JDesrosiers Multilingual
   $the_query = new WP_Query( $query );
   if ($the_query->have_posts()) : $the_query->the_post();  
     $quote .= '<blockquote class="">' . $post->post_content 
